@@ -46,8 +46,9 @@
 	</bean>
 
 	<!-- Ao anotar @Transaction irá chamar os gerenciador de transações -->
-	<tx:annotation-driven transaction-manager="transactionManager"
-		proxy-target-class="true" />
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="transactionManager" />
+
 
 	<!-- View scope - Integracao do Spring com JsF -->
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">

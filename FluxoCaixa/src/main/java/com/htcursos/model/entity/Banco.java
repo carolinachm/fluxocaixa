@@ -3,6 +3,8 @@ package com.htcursos.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -12,12 +14,11 @@ import javax.persistence.Table;
 public class Banco {
 	@Id
 	@SequenceGenerator(name = "seq_ban", initialValue = 1)
+	@GeneratedValue(generator = "seq_ban", strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private int numero;
 	private String sigla;
-	@Enumerated(EnumType.STRING)
-	private TipoConta tipo;
 	private String agencia;
 	private String observacao;
 	
@@ -26,13 +27,12 @@ public class Banco {
 	}
 
 	public Banco(Long id, String nome, int numero, String sigla,
-			TipoConta tipo, String agencia, String observacao) {
+			String agencia, String observacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.numero = numero;
 		this.sigla = sigla;
-		this.tipo = tipo;
 		this.agencia = agencia;
 		this.observacao = observacao;
 	}
@@ -69,14 +69,6 @@ public class Banco {
 		this.sigla = sigla;
 	}
 
-	public TipoConta getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoConta tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getAgencia() {
 		return agencia;
 	}
@@ -104,7 +96,6 @@ public class Banco {
 		result = prime * result
 				+ ((observacao == null) ? 0 : observacao.hashCode());
 		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
 
@@ -144,18 +135,16 @@ public class Banco {
 				return false;
 		} else if (!sigla.equals(other.sigla))
 			return false;
-		if (tipo != other.tipo)
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "Banco [id=" + id + ", nome=" + nome + ", numero=" + numero
-				+ ", sigla=" + sigla + ", tipo=" + tipo + ", agencia="
-				+ agencia + ", observacao=" + observacao + "]";
+				+ ", sigla=" + sigla + ", agencia=" + agencia + ", observacao="
+				+ observacao + "]";
 	}
-	
+
 	
 
 }

@@ -25,7 +25,7 @@ public class TestEstadoDAO {
 	EstadoDAO estadoDAO;
 
 	@Test
-	
+	@Ignore
 	public void salvar() throws DAOException {
 		Estado estado = new Estado();
 		estado.setNome("Goias");

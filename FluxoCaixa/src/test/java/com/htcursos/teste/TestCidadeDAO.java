@@ -28,6 +28,7 @@ public class TestCidadeDAO {
 	@Inject
 	private CidadeDAO cidadeDAO;
 	@Test
+	@Ignore
 	public void salvar() throws DAOException{
 		
 		Estado estado = estadoDAO.buscarPorId(8L);

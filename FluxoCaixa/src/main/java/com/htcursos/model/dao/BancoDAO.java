@@ -22,10 +22,15 @@ public class BancoDAO {
 		// em = JPAUtil.abreConexao();
 	}
 
-	@Transactional
+	 @Transactional(noRollbackFor = DAOException.class)
 	public void salvar(Banco banco) throws DAOException {
 
-		em.merge(banco);
+		try {
+			em.merge(banco);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
 	}
 
 	@Transactional

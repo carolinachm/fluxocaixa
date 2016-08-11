@@ -1,5 +1,6 @@
 package com.htcursos.teste;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,6 +13,7 @@ import com.htcursos.model.entity.Usuario;
 public class TestSpring {
 	
 	@Test
+	@Ignore
 	public void testString() throws DAOException {
 		
 		ApplicationContext contexto = new ClassPathXmlApplicationContext("applicationContext.xml");

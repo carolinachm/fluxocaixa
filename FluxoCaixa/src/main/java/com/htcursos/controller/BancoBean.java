@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.htcursos.model.entity.Banco;
 import com.htcursos.model.entity.TipoConta;
@@ -24,7 +25,6 @@ public class BancoBean {
 	 */
 	private Banco banco = new Banco();
 	
-	private TipoConta[] tipoconta;
 	
 	private List<Banco> bancoList;
 	@Inject
@@ -71,14 +71,7 @@ public class BancoBean {
 	public void setBancoList(List<Banco> bancoList) {
 		this.bancoList = bancoList;
 	}
-
-	public TipoConta[] getTipoconta() {
-		return TipoConta.values();
-	}
-
-	public void setTipoconta(TipoConta[] tipoconta) {
-		this.tipoconta = tipoconta;
-	}
+	
 
 	
 }

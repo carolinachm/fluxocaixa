@@ -7,44 +7,43 @@ import javax.inject.Inject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.htcursos.model.dao.BancoDAO;
 import com.htcursos.model.dao.DAOException;
-import com.htcursos.model.dao.PermissaoDAO;
-import com.htcursos.model.entity.Permissao;
+import com.htcursos.model.entity.Banco;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/applicationContext.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
-public class TestPermissaoDAO {
+public class TestBancoDAO {
 	@Inject
-	PermissaoDAO permissaoDAO;
+	BancoDAO bancoDAO;
 
 	@Test
-	@Ignore
+	@Rollback
 	public void salvar() throws DAOException {
-		Permissao permissao = new Permissao();
-		permissao.setDescricao("Administrador");
-		;
+		Banco banco = new Banco();
+		banco.setNome("Banco do Brasil");
+		banco.setNumero(1);
+		banco.setSigla("BB");
 
-		permissaoDAO.salvar(permissao);
-
-		System.out.println("Descricao" + permissao.getDescricao()
-				+ "salva com sucesso");
+		bancoDAO.salvar(banco);
 
 	}
 
 	@Test
 	@Ignore
 	public void listarTodos() {
-		List<Permissao> lista = permissaoDAO.buscarTodos();
+		List<Banco> lista = bancoDAO.buscarTodos();
 
-		for (Permissao permissao : lista) {
-			System.out.println("Descricao" + permissao.getDescricao());
+		for (Banco banco : lista) {
+			System.out.println("Nome" + banco.getNome());
 		}
 	}
 
@@ -53,15 +52,14 @@ public class TestPermissaoDAO {
 	public void excluir() {
 		Long id = 1L;
 
-		Permissao permissao = permissaoDAO.buscarPorId(id);
+		Banco banco = bancoDAO.buscarPorId(id);
 
-		if (permissao == null) {
+		if (banco == null) {
 			System.out.println("Nenhum registro encontrado");
 		} else {
-			permissaoDAO.excluir(permissao);
+			bancoDAO.excluir(banco);
 			System.out.println("Registro removido:");
-			System.out.println(permissao.getId() + " - "
-					+ permissao.getDescricao());
+			System.out.println(banco.getId() + " - " + banco.getNome());
 		}
 	}
 
