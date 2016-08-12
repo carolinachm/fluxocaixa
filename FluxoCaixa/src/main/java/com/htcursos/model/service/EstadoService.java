@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.htcursos.model.dao.DAOException;
 import com.htcursos.model.dao.EstadoDAO;
 import com.htcursos.model.entity.Estado;
+import com.htcursos.model.entity.Estado;
 
 @Service
 public class EstadoService {
@@ -24,25 +25,25 @@ public class EstadoService {
 	}
 
 	public void salvar(Estado estado) throws ServiceException {
-
 		try {
-			if (estado.getId() == null)
-				estadoDAO.salvar(estado);
+			// Validação de Regras de Negócio
+			if (estado.getNome() == null || estado.getNome() == "") {
+				throw new ServiceException("Campo Nome vázio!");
+			}
+			estadoDAO.salvar(estado);
 		} catch (DAOException e) {
-			e.printStackTrace();
-			throw new ServiceException("NÃ£o foi possivel salvar", e);
+			throw new ServiceException("Não foi possivel salvar!", e);
 		}
-
-	}
-
-	public void excluir(Estado estado) {
-		estadoDAO.excluir(estado);
-
 	}
 
 	public List<Estado> buscarTodos() {
 		List<Estado> lista = estadoDAO.buscarTodos();
 		return lista;
+	}
+
+	public void excluir(Estado estado) {
+		estadoDAO.excluir(estado);
+		
 	}
 
 

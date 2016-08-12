@@ -2,8 +2,9 @@ package com.htcursos.controller;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.annotation.PostConstruct;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.model.entity.Cidade;
 import com.htcursos.model.entity.Pessoa;
 import com.htcursos.model.entity.Estado;
-import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.service.EstadoService;
 import com.htcursos.model.service.PessoaService;
 import com.htcursos.model.service.ServiceException;
-import com.htcursos.model.service.UsuarioService;
 import com.htcursos.model.util.FacesUtil;
 
 @Controller
@@ -26,7 +25,7 @@ public class PessoaBean {
 	 * Objeto que contera os dados da tela para salvar Objeto Vinculado ou
 	 * Bindable com componente da tela
 	 */
-	private Pessoa pessoa = new Pessoa();
+	private Pessoa pessoa;
 
 	private List<Pessoa> pessoaList;
 
@@ -38,6 +37,7 @@ public class PessoaBean {
 
 	@PostConstruct
 	public void inicializar() {
+		pessoa = new Pessoa();
 		pessoa.setCidade(new Cidade());
 		pessoaList = pessoaService.buscarTodos();
 		estadoList = estadoService.buscarTodos();
@@ -47,26 +47,34 @@ public class PessoaBean {
 		pessoa = new Pessoa();
 	}
 
-	public void salvar() throws ServiceException {
-		pessoaService.salvar(pessoa);
-		limpar();
-		pessoaList = pessoaService.buscarTodos();
-		FacesUtil.addInfoMessage("Pessoa salvo com sucesso");
-	}
-
-	public void excluir() throws ServiceException {
-		pessoaService.excluir(pessoa);
-		limpar();
-		pessoaList = pessoaService.buscarTodos();
-		FacesUtil.addInfoMessage("Usu√°rio excluido com sucesso");
-	}
-
-	public void buscarPessoas(ValueChangeEvent evento) {
-		if (evento.getNewValue() != evento.getOldValue()) {
-			Estado estado = (Estado) evento.getNewValue();
-			pessoaList = pessoaService.buscarPessoas(estado);
+	public void salvar() {
+		try {
+			pessoaService.salvar(pessoa);
+			// Limpar os dados
+			limpar();
+			// Atualiza lista
+			pessoaList = pessoaService.buscarTodos();
+			// Envia Mensagem para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Salvo com Sucesso!", null));
+		} catch (ServiceException e) {
+			// CÛdigo da mensagem de erro para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Erro ao Salvar: " + e.getMessage(), null));
+			e.printStackTrace();
 		}
+	}
 
+	public void excluir() {
+		pessoaService.excluir(pessoa);
+		// Nova inst‚ncia para limpar formul·rio
+		limpar();
+		// Atualiza lista
+		pessoaList = pessoaService.buscarTodos();
 	}
 
 	public void buscarTodos() {

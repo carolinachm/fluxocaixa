@@ -4,6 +4,8 @@ package com.htcursos.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
@@ -38,17 +40,34 @@ public class EstadoBean {
 		estado = new Estado();
 	}
 	
-	public void salvar() throws ServiceException{
-		estadoService.salvar(estado);
-		limpar();
-		estadoList = estadoService.buscarTodos();
-		FacesUtil.addInfoMessage("Estado salvo com sucesso");
+	public void salvar() {
+		try {
+			estadoService.salvar(estado);
+			// Limpar os dados
+			limpar();
+			// Atualiza lista
+			estadoList = estadoService.buscarTodos();
+			// Envia Mensagem para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Salvo com Sucesso!", null));
+		} catch (ServiceException e) {
+			// CÛdigo da mensagem de erro para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Erro ao Salvar: " + e.getMessage(), null));
+			e.printStackTrace();
+		}
 	}
-	public void excluir() throws ServiceException{
+
+	public void excluir() {
 		estadoService.excluir(estado);
+		// Nova inst‚ncia para limpar formul·rio
 		limpar();
+		// Atualiza lista
 		estadoList = estadoService.buscarTodos();
-		FacesUtil.addInfoMessage("Usu√°rio excluido com sucesso");
 	}
 	
 	public void buscarTodos(){

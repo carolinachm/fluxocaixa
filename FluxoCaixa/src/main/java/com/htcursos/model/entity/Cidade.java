@@ -96,9 +96,11 @@ public class Cidade {
 
 	@Override
 	public String toString() {
-		return String.valueOf(id);
+		return "Cidade [id=" + id + ", nome=" + nome + ", estado=" + estado
+				+ "]";
 	}
 
+	
 	
 	
 

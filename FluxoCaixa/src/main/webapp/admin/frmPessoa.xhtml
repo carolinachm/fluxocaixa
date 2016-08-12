@@ -9,7 +9,7 @@
 <body>
 	<h:form>
 		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:panel header="Cadastro de Pessoas">
+		<p:panel id="painelCadastro" header="Cadastro de Pessoas">
 			<p:panelGrid columns="4">
 				<p:outputLabel for="nome" value="Nome:" />
 				<p:inputText id="nome" maxlength="50" size="35"
@@ -28,11 +28,12 @@
 
 
 				<p:outputLabel for="estado" value="Estado:" />
-				<p:selectOneMenu id="estado" value="#{pessoaBean.pessoa.cidade.estado}"
+				<p:selectOneMenu id="estado"
+					value="#{pessoaBean.pessoa.cidade.estado}"
 					converter="#{estadoConverter}"
 					valueChangeListener="#{cidadeBean.buscarCidades}">
 					<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um estado" />
+						itemLabel="Selecione um estado" />
 					<f:selectItems value="#{estadoBean.estadoList}" var="estado"
 						itemLabel="#{estado.uf}" itemValue="#{estado}" />
 				</p:selectOneMenu>
@@ -42,7 +43,7 @@
 					value="#{pessoaBean.pessoa.cidade}" converter="#{cidadeConverter}"
 					required="true" requiredMessage="O campo 'Estado' é obrigatório">
 					<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um cidade" />
+						itemLabel="Selecione um cidade" />
 					<f:selectItems value="#{cidadeBean.cidadeList}" var="cidade"
 						itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
 				</p:selectOneMenu>
@@ -94,7 +95,7 @@
 			<p:panelGrid columns="2">
 				<p:commandButton value="Salvar" action="#{pessoaBean.salvar}"
 					update="@form" />
-					<p:commandButton value="Fechar"  />
+				<p:commandButton value="Fechar" />
 			</p:panelGrid>
 		</p:panel>
 
@@ -118,23 +119,25 @@
 				<p:column headerText="E-mail">
 					<h:outputText value="#{pessoa.email}" />
 				</p:column>
-				
 
-				<p:column headerText="Ação">
-					<p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
-						immediate="true" process="@this" update="@form">
-						<f:setPropertyActionListener value="#{pessoa}"
-							target="#{pessoaBean.pessoa}" />
-					</p:commandButton>
-					<p:commandButton icon="ui-icon-trash" alt="Excluir"
-						oncomplete="PF('confirmacao').show();" immediate="true"
-						title="Excluir" process="@this" update="@form">
+
+				<p:column headerText="Ação" width="100">
+					<p:commandButton icon="ui-icon-trash" alt="Excluir" title="Excluir"
+						oncomplete="PF('confirmacao').show()" immediate="true"
+						action="#{pessoaBean.setPessoa(pessoa)}">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 					</p:commandButton>
 
 
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						process="@this" update="@form"
+						action="#{pessoaBean.setPessoa(pessoa)}">
+						<f:setPropertyActionListener value="#{pessoa}"
+							target="#{pessoaBean.pessoa}" />
+					</p:commandButton>
 				</p:column>
+
 
 			</p:dataTable>
 
@@ -143,7 +146,7 @@
 				severity="alert" closable="true">
 
 				<p:commandButton title="Sim" alt="Sim" value="Sim"
-					actionListener="#{estadoBean.excluir}"
+					actionListener="#{pessoaBean.excluir}"
 					onclick="confirmacao.hide();" update="@form" process="@this" />
 
 				<p:commandButton title="Não" alt="Não" value="Não"

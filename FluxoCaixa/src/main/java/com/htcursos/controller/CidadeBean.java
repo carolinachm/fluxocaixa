@@ -3,6 +3,8 @@ package com.htcursos.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -46,26 +48,40 @@ public class CidadeBean {
 		cidade = new Cidade();
 	}
 
-	public void salvar() throws ServiceException {
-		cidadeService.salvar(cidade);
-		limpar();
-		cidadeList = cidadeService.buscarTodos();
-		estadoList = estadoService.buscarTodos();
-		FacesUtil.addInfoMessage("Cidade salvo com sucesso");
+	public void salvar() {
+		try {
+			cidadeService.salvar(cidade);
+			// Limpar os dados
+			limpar();
+			// Atualiza lista
+			cidadeList = cidadeService.buscarTodos();
+			// Envia Mensagem para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Salvo com Sucesso!", null));
+		} catch (ServiceException e) {
+			// CÛdigo da mensagem de erro para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Erro ao Salvar: " + e.getMessage(), null));
+			e.printStackTrace();
+		}
 	}
 
-	public void excluir() throws ServiceException {
+	public void excluir() {
 		cidadeService.excluir(cidade);
+		// Nova inst‚ncia para limpar formul·rio
 		limpar();
+		// Atualiza lista
 		cidadeList = cidadeService.buscarTodos();
-		FacesUtil.addInfoMessage("Usu√°rio excluido com sucesso");
 	}
-
 	public void buscarCidades(ValueChangeEvent evento) {
 		if(evento.getNewValue() != evento.getOldValue()) {
-			Estado estado = (Estado)evento.getNewValue();
+			Estado cidade = (Estado)evento.getNewValue();
 			
-			cidadeList = cidadeService.buscarCidades(estado);
+			cidadeList = cidadeService.buscarCidades(cidade);
 		}
 	}
 
@@ -97,6 +113,7 @@ public class CidadeBean {
 		this.estadoList = estadoList;
 	}
 
+	
 
 
 }

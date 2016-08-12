@@ -11,24 +11,24 @@
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:panel header="Cadastro de Cidade">
 			<p:panelGrid columns="2">
-				<h:outputLabel value="Nome" for="nome" />
-				<p:inputText id="nome" size="20" value="#{cidadeBean.cidade.nome}"
-					required="true" requiredMessage="O campo nome e obrigatorio" />
+				<h:outputLabel value="Nome"  />
+				<p:inputText  size="20" value="#{cidadeBean.cidade.nome}"
+					/>
 
 				<p:outputLabel for="estado" value="Estado:" />
-					<p:selectOneMenu id="estado" value="#{cidadeBean.cidade.estado}"
+				<p:selectOneMenu id="estado" value="#{cidadeBean.cidade.estado}"
 					converter="#{estadoConverter}">
 					<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um estado" />
-					<f:selectItems value="#{estadoBean.estadoList}" var="est"
-						itemLabel="#{est.uf}" />
+						itemLabel="Selecione um estado" />
+					<f:selectItems value="#{estadoBean.estadoList}" var="estado"
+						itemLabel="#{estado.nome} - #{estado.uf} " itemValue="#{estado}"/>
 				</p:selectOneMenu>
 
 			</p:panelGrid>
 			<p:panelGrid columns="2">
 				<p:commandButton value="Salvar" action="#{cidadeBean.salvar}"
 					update="@form" />
-					<p:commandButton value="Fechar"  />
+				<p:commandButton value="Fechar" />
 			</p:panelGrid>
 		</p:panel>
 
@@ -51,16 +51,19 @@
 				</p:column>
 
 				<p:column headerText="Ação">
-				
-					<p:commandButton icon="ui-icon-pencil" title="Editar"
-						update="@form">
-						<f:setPropertyActionListener value="#{cidade}"
-							target="#cidadeBean.cidade}" />
-					</p:commandButton>
-					
+
+
+
 					<p:commandButton icon="ui-icon-trash" alt="Excluir"
 						oncomplete="PF('confirmacao').show();" immediate="true"
-						title="Excluir" process="@this" update="@form">
+						title="Excluir" process="@this" update="@form"
+						action="#{cidadeBean.setCidade(cidade)}">
+						<f:setPropertyActionListener value="#{cidade}"
+							target="#{cidadeBean.cidade}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						update="@form" action="#{cidadeBean.setCidade(cidade)}">
 						<f:setPropertyActionListener value="#{cidade}"
 							target="#{cidadeBean.cidade}" />
 					</p:commandButton>

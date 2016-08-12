@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.htcursos.model.dao.PessoaDAO;
 import com.htcursos.model.dao.DAOException;
 import com.htcursos.model.entity.Pessoa;
+import com.htcursos.model.entity.Pessoa;
 import com.htcursos.model.entity.Estado;
 @Service
 public class PessoaService {
@@ -17,29 +18,16 @@ public class PessoaService {
 	private PessoaDAO pessoaDAO;
 
 	
-	public PessoaDAO getPessoaDAO() {
-		return pessoaDAO;
-	}
-
-	public void setPessoaDAO(PessoaDAO pessoaDAO) {
-		this.pessoaDAO = pessoaDAO;
-	}
-
 	public void salvar(Pessoa pessoa) throws ServiceException {
-
 		try {
-			if (pessoa.getId() == null)
-				pessoaDAO.salvar(pessoa);
+			// Validação de Regras de Negócio
+			if (pessoa.getNome() == null || pessoa.getNome() == "") {
+				throw new ServiceException("Campo Nome vázio!");
+			}
+			pessoaDAO.salvar(pessoa);
 		} catch (DAOException e) {
-			e.printStackTrace();
-			throw new ServiceException("NÃ£o foi possivel salvar", e);
+			throw new ServiceException("Não foi possivel salvar!", e);
 		}
-
-	}
-
-	public void excluir(Pessoa pessoa) {
-		pessoaDAO.excluir(pessoa);
-
 	}
 
 	public List<Pessoa> buscarTodos() {
@@ -47,14 +35,15 @@ public class PessoaService {
 		return lista;
 	}
 
-	public Pessoa buscarPorId(Long id) {
+	public void excluir(Pessoa pessoa) {
+		pessoaDAO.excluir(pessoa);
+		
+	}
+
+	public Pessoa buscarPorId(long id) {
 		Pessoa pessoa =  pessoaDAO.buscarPorId(id);
 		return pessoa;
 	}
 
-	public List<Pessoa> buscarPessoas(Estado estado) {
-		
-		return pessoaDAO.buscarPessoas(estado);
-	}
 
 }

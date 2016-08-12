@@ -46,14 +46,16 @@
 				</p:column>
 
 				<p:column headerText="Ação">
-					<p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
-						immediate="true" process="@this" update="@form">
+					
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true" title="Excluir"
+						process="@this" update="@form" action="#{estadoBean.setEstado(estado)}">
 						<f:setPropertyActionListener value="#{estado}"
 							target="#{estadoBean.estado}" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-trash" alt="Excluir"
-						oncomplete="PF('confirmacao').show();" immediate="true" title="Excluir"
-						process="@this" update="@form">
+					
+					<p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form" action="#{estadoBean.setEstado(estado)}">
 						<f:setPropertyActionListener value="#{estado}"
 							target="#{estadoBean.estado}" />
 					</p:commandButton>

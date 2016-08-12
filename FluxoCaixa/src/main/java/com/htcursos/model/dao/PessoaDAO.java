@@ -20,7 +20,7 @@ public class PessoaDAO {
 	public PessoaDAO() {
 		// em = JPAUtil.abreConexao();
 	}
-
+	
 	@Transactional
 	public void salvar(Pessoa pessoa) throws DAOException {
 
@@ -34,15 +34,9 @@ public class PessoaDAO {
 
 	@Transactional
 	public void excluir(Pessoa pessoa) {
-
-		try {
-			Pessoa pessoaExcluir = buscarPorId(pessoa.getId());
-			em.remove(pessoaExcluir);
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-	}
+		pessoa = buscarPorId(pessoa.getId());
+		em.remove(pessoa);
+}
 
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> buscarTodos() {

@@ -28,17 +28,13 @@ public class PessoaConverter implements Converter {
 
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object pessoa) {
 
-		if (pessoa == null) {
-			return null; // Or an empty string, can also.
-		}
+		if (pessoa == null)
+			return "";
+		Pessoa p = (Pessoa) pessoa;
+		if (p.getId() == null)
+			return null;
 
-		if (!(pessoa instanceof Pessoa)) {
-			throw new ConverterException("The value is not a valid Pessoa: "
-					+ pessoa);
-		}
-
-		Long id = ((Pessoa) pessoa).getId();
-		return (id != null) ? String.valueOf(id) : null;
+		return p.getId().toString();
 	}
 
 }

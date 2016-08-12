@@ -3,12 +3,10 @@ package com.htcursos.controller.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.htcursos.model.entity.Cidade;
-import com.htcursos.model.entity.Estado;
 import com.htcursos.model.service.CidadeService;
 
 @Named
@@ -27,17 +25,12 @@ public class CidadeConverter implements Converter {
 	}
 
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object cidade) {
+		if (cidade == null)
+			return "";
+		Cidade c = (Cidade) cidade;
+		if (c.getId() == null)
+			return null;
 
-		if (cidade == null) {
-			return null; // Or an empty string, can also.
-		}
-
-		if (!(cidade instanceof Cidade)) {
-			throw new ConverterException("The value is not a valid Cidade: "
-					+ cidade);
-		}
-
-		Long id = ((Cidade) cidade).getId();
-		return (id != null) ? String.valueOf(id) : null;
+		return c.getId().toString();
 	}
 }

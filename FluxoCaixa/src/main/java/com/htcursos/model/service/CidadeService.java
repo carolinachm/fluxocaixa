@@ -26,25 +26,25 @@ public class CidadeService {
 	}
 
 	public void salvar(Cidade cidade) throws ServiceException {
-
 		try {
-			if (cidade.getId() == null)
-				cidadeDAO.salvar(cidade);
+			// Validação de Regras de Negócio
+			if (cidade.getNome() == null || cidade.getNome() == "") {
+				throw new ServiceException("Campo Nome vázio!");
+			}
+			cidadeDAO.salvar(cidade);
 		} catch (DAOException e) {
-			e.printStackTrace();
-			throw new ServiceException("NÃ£o foi possivel salvar", e);
+			throw new ServiceException("Não foi possivel salvar!", e);
 		}
-
-	}
-
-	public void excluir(Cidade cidade) {
-		cidadeDAO.excluir(cidade);
-
 	}
 
 	public List<Cidade> buscarTodos() {
 		List<Cidade> lista = cidadeDAO.buscarTodos();
 		return lista;
+	}
+
+	public void excluir(Cidade cidade) {
+		cidadeDAO.excluir(cidade);
+		
 	}
 
 	public Cidade buscarPorId(long id) {

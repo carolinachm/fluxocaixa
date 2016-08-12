@@ -23,14 +23,12 @@ public class CidadeDAO {
 
 	@Transactional
 	public void salvar(Cidade cidade) throws DAOException {
-
 		try {
 			em.merge(cidade);
-		} catch (Exception causa) {// captura a excecao do banco
-			throw new DAOException("NÃ£o foi possivel salvar", causa);
-
+		} catch (Exception e) {
+			throw new DAOException("Não foi possivel salvar!", e);
 		}
-	}
+}
 
 	@Transactional
 	public void excluir(Cidade cidade) {
