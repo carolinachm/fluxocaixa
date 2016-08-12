@@ -26,7 +26,7 @@ public class TestBancoDAO {
 	BancoDAO bancoDAO;
 
 	@Test
-	@Rollback
+
 	public void salvar() throws DAOException {
 		Banco banco = new Banco();
 		banco.setNome("Banco do Brasil");

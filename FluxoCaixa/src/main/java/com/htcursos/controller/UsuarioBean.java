@@ -54,7 +54,8 @@ public class UsuarioBean {
 		usuarioService.salvar(usuario);
 		limpar();
 		usuarioList = usuarioService.buscarTodos();
-		
+		permissaoList = permissaoService.buscarTodos();
+		pessoaList = pessoaService.buscarTodos();
 		FacesUtil.addInfoMessage("Usuário salvo com sucesso");
 	}
 	public void excluir() throws ServiceException{

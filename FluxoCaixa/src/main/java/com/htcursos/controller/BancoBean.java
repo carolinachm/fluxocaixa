@@ -32,7 +32,7 @@ public class BancoBean {
 	
 	@PostConstruct
 	public void inicializar(){
-			bancoList = bancoService.buscarTodos();
+		bancoList = bancoService.buscarTodos();
 	}
 	
 	public void limpar(){

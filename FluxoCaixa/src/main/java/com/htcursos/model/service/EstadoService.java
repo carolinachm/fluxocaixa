@@ -45,10 +45,11 @@ public class EstadoService {
 		return lista;
 	}
 
+
 	public Estado buscarPorId(Long id) {
-		Estado estado =  estadoDAO.buscarPorId(id);
-		return estado;
+		return estadoDAO.buscarPorId(id);
 	}
+
 
 	
 

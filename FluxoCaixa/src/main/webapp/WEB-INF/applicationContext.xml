@@ -13,12 +13,12 @@
 	<context:component-scan base-package="com.htcursos" />
 
 	<!-- Configurando o Banco de dados -->
-	<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/cjweb3db" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-
+	<bean id="postgresqlDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/fluxocaixadb" />
+		<property name="username" value="postgres" />
+		<property name="password" value="postgres" />
 	</bean>
 
 	<!-- Criando um EntityManager -->
@@ -26,13 +26,13 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<!-- Referencia as propriedades do banco -->
-		<property name="dataSource" ref="basicDataSource" />
+		<property name="dataSource" ref="postgresqlDataSource" />
 		<!-- Qual a Adpter JPA? Neste caso é o Hibernate -->
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="false" />
+				<property name="showSql" value="true" />
 				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
+				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
 			</bean>
 		</property>
 
@@ -46,9 +46,8 @@
 	</bean>
 
 	<!-- Ao anotar @Transaction irá chamar os gerenciador de transações -->
-	<tx:annotation-driven proxy-target-class="true"
-		transaction-manager="transactionManager" />
-
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
 
 	<!-- View scope - Integracao do Spring com JsF -->
 	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">

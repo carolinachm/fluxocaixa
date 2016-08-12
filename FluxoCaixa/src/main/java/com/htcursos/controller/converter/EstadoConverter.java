@@ -15,15 +15,15 @@ public class EstadoConverter implements Converter {
 	@Inject
 	private EstadoService estadoService;
 
-	public Object getAsObject(FacesContext arg0, UIComponent arg1, String id) {
-		try {
-			Estado estado = estadoService.buscarPorId(Long.parseLong(id));
-			return estado;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
+		public Object getAsObject(FacesContext arg0, UIComponent arg1, String id) {
+			try {
+				Estado estado = estadoService.buscarPorId(Long.parseLong(id));
+				return estado;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
-		return null;
-	}
 
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object estado) {
 	

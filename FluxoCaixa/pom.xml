@@ -31,11 +31,11 @@
 			<version>1.7.21</version>
 		</dependency>
 
-		<!-- MySQL database driver -->
+		<!-- postgresql -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.9</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1200-jdbc41</version>
 		</dependency>
 
 		<!-- log4j -->

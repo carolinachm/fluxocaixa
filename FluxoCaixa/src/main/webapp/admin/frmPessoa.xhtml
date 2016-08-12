@@ -28,21 +28,21 @@
 
 
 				<p:outputLabel for="estado" value="Estado:" />
-				<p:selectOneMenu id="estado" filter="true"
-					value="#{pessoaBean.pessoa.cidade.estado}"
+				<p:selectOneMenu id="estado" value="#{pessoaBean.pessoa.cidade.estado}"
 					converter="#{estadoConverter}"
-					valueChangeListener="#{cidadeBean.buscarCidades}" required="true"
-					requiredMessage="O campo 'Estado' é obrigatório">
+					valueChangeListener="#{cidadeBean.buscarCidades}">
 					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione um estado" />
-					<f:selectItems value="#{cidadeBean.estadoList}" var="estado"
-						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.uf}" />
+							itemLabel="Selecione um estado" />
+					<f:selectItems value="#{estadoBean.estadoList}" var="estado"
+						itemLabel="#{estado.uf}" itemValue="#{estado}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel for="estado" value="Cidade:" />
+				<p:outputLabel for="cidade" value="Cidade:" />
 				<p:selectOneMenu id="cidade" filter="true"
 					value="#{pessoaBean.pessoa.cidade}" converter="#{cidadeConverter}"
 					required="true" requiredMessage="O campo 'Estado' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um cidade" />
 					<f:selectItems value="#{cidadeBean.cidadeList}" var="cidade"
 						itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
 				</p:selectOneMenu>

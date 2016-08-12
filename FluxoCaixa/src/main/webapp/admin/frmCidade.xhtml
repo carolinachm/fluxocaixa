@@ -16,16 +16,13 @@
 					required="true" requiredMessage="O campo nome e obrigatorio" />
 
 				<p:outputLabel for="estado" value="Estado:" />
-					<p:selectOneMenu id="estado" filter="true"
-						value="#{cidadeBean.cidade.estado}" converter="#{estadoConverter}"
-						 required="true"
-						requiredMessage="O campo 'Estado' é obrigatório">
-						<f:selectItem noSelectionOption="true"
+					<p:selectOneMenu id="estado" value="#{cidadeBean.cidade.estado}"
+					converter="#{estadoConverter}">
+					<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um estado" />
-						<f:selectItems value="#{cidadeBean.estadoList}" var="estado"
-							itemValue="#{estado}"
-							itemLabel="#{estado.nome} - #{estado.uf}" />
-					</p:selectOneMenu>
+					<f:selectItems value="#{estadoBean.estadoList}" var="est"
+						itemLabel="#{est.uf}" />
+				</p:selectOneMenu>
 
 			</p:panelGrid>
 			<p:panelGrid columns="2">
@@ -54,11 +51,13 @@
 				</p:column>
 
 				<p:column headerText="Ação">
-					<p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
-						immediate="true" process="@this" update="@form">
+				
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						update="@form">
 						<f:setPropertyActionListener value="#{cidade}"
-							target="#{cidadeBean.cidade}" />
+							target="#cidadeBean.cidade}" />
 					</p:commandButton>
+					
 					<p:commandButton icon="ui-icon-trash" alt="Excluir"
 						oncomplete="PF('confirmacao').show();" immediate="true"
 						title="Excluir" process="@this" update="@form">

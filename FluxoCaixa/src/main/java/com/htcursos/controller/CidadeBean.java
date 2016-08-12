@@ -34,6 +34,7 @@ public class CidadeBean {
 	private CidadeService cidadeService;
 	@Inject
 	private EstadoService estadoService;
+	
 
 	@PostConstruct
 	public void inicializar() {
@@ -49,6 +50,7 @@ public class CidadeBean {
 		cidadeService.salvar(cidade);
 		limpar();
 		cidadeList = cidadeService.buscarTodos();
+		estadoList = estadoService.buscarTodos();
 		FacesUtil.addInfoMessage("Cidade salvo com sucesso");
 	}
 
@@ -60,11 +62,11 @@ public class CidadeBean {
 	}
 
 	public void buscarCidades(ValueChangeEvent evento) {
-		if (evento.getNewValue() != evento.getOldValue()) {
-			Estado estado = (Estado) evento.getNewValue();
+		if(evento.getNewValue() != evento.getOldValue()) {
+			Estado estado = (Estado)evento.getNewValue();
+			
 			cidadeList = cidadeService.buscarCidades(estado);
 		}
-
 	}
 
 	public void buscarTodos() {
@@ -94,5 +96,7 @@ public class CidadeBean {
 	public void setEstadoList(List<Estado> estadoList) {
 		this.estadoList = estadoList;
 	}
+
+
 
 }

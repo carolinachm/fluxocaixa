@@ -25,11 +25,11 @@ public class TestPermissaoDAO {
 	PermissaoDAO permissaoDAO;
 
 	@Test
-	@Ignore
+	
 	public void salvar() throws DAOException {
 		Permissao permissao = new Permissao();
 		permissao.setDescricao("Administrador");
-		;
+	
 
 		permissaoDAO.salvar(permissao);
 
