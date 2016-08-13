@@ -31,19 +31,19 @@
 			<version>1.7.21</version>
 		</dependency>
 
-		<!-- postgresql
+		<!-- postgresql-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1200-jdbc41</version>
-		</dependency> -->
+		</dependency> 
 
-		<!-- jdbc driver -->
+		<!-- jdbc driver
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- log4j -->
 		<dependency>

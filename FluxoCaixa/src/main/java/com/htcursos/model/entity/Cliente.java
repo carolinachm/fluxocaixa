@@ -22,6 +22,7 @@ public class Cliente {
 	@Id
 	@SequenceGenerator(name = "seq_cli", initialValue = 1)
 	@GeneratedValue(generator = "seq_cli", strategy = GenerationType.AUTO)
+	private Long id;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dataCadastro", nullable = false)
 	private Date dataCadastro;
@@ -30,23 +31,25 @@ public class Cliente {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Pessoa pessoa;
-	@Embedded
-	private Endereco endereco;
-	@Embedded
-	private Telefone telefone;
-
+	
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Date dataCadastro, Boolean liberado, Pessoa pessoa,
-			Endereco endereco, Telefone telefone) {
+	public Cliente(Long id, Date dataCadastro, Boolean liberado, Pessoa pessoa) {
 		super();
+		this.id = id;
 		this.dataCadastro = dataCadastro;
 		this.liberado = liberado;
 		this.pessoa = pessoa;
-		this.endereco = endereco;
-		this.telefone = telefone;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Date getDataCadastro() {
@@ -73,35 +76,16 @@ public class Cliente {
 		this.pessoa = pessoa;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
-		result = prime * result
-				+ ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((liberado == null) ? 0 : liberado.hashCode());
 		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
-		result = prime * result
-				+ ((telefone == null) ? 0 : telefone.hashCode());
 		return result;
 	}
 
@@ -119,10 +103,10 @@ public class Cliente {
 				return false;
 		} else if (!dataCadastro.equals(other.dataCadastro))
 			return false;
-		if (endereco == null) {
-			if (other.endereco != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!endereco.equals(other.endereco))
+		} else if (!id.equals(other.id))
 			return false;
 		if (liberado == null) {
 			if (other.liberado != null)
@@ -134,19 +118,16 @@ public class Cliente {
 				return false;
 		} else if (!pessoa.equals(other.pessoa))
 			return false;
-		if (telefone == null) {
-			if (other.telefone != null)
-				return false;
-		} else if (!telefone.equals(other.telefone))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Cliente [dataCadastro=" + dataCadastro + ", liberado="
-				+ liberado + ", pessoa=" + pessoa + ", endereco=" + endereco
-				+ ", telefone=" + telefone + "]";
+		return "Cliente [id=" + id + ", dataCadastro=" + dataCadastro
+				+ ", liberado=" + liberado + ", pessoa=" + pessoa + "]";
 	}
+
+	
+	
 
 }
