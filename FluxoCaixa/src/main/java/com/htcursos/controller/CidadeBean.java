@@ -52,7 +52,7 @@ public class CidadeBean {
 		try {
 			cidadeService.salvar(cidade);
 			// Limpar os dados
-			limpar();
+			cidade = new Cidade();
 			// Atualiza lista
 			cidadeList = cidadeService.buscarTodos();
 			// Envia Mensagem para Tela
@@ -61,7 +61,7 @@ public class CidadeBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Salvo com Sucesso!", null));
 		} catch (ServiceException e) {
-			// Código da mensagem de erro para Tela
+			// Cï¿½digo da mensagem de erro para Tela
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -72,8 +72,8 @@ public class CidadeBean {
 
 	public void excluir() {
 		cidadeService.excluir(cidade);
-		// Nova instância para limpar formulário
-		limpar();
+		// Nova instï¿½ncia para limpar formulï¿½rio
+		cidade = new Cidade();
 		// Atualiza lista
 		cidadeList = cidadeService.buscarTodos();
 	}
@@ -113,7 +113,9 @@ public class CidadeBean {
 		this.estadoList = estadoList;
 	}
 
-	
+	public boolean isEditando() {
+		return this.cidade.getId() != null;
+	}
 
 
 }

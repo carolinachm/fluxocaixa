@@ -44,7 +44,7 @@ public class EstadoBean {
 		try {
 			estadoService.salvar(estado);
 			// Limpar os dados
-			limpar();
+			estado = new Estado();
 			// Atualiza lista
 			estadoList = estadoService.buscarTodos();
 			// Envia Mensagem para Tela
@@ -53,7 +53,7 @@ public class EstadoBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Salvo com Sucesso!", null));
 		} catch (ServiceException e) {
-			// Código da mensagem de erro para Tela
+			// Cï¿½digo da mensagem de erro para Tela
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -64,8 +64,8 @@ public class EstadoBean {
 
 	public void excluir() {
 		estadoService.excluir(estado);
-		// Nova instância para limpar formulário
-		limpar();
+		// Nova instï¿½ncia para limpar formulï¿½rio
+		estado = new Estado();
 		// Atualiza lista
 		estadoList = estadoService.buscarTodos();
 	}
@@ -89,6 +89,8 @@ public class EstadoBean {
 	public void setEstadoList(List<Estado> estadoList) {
 		this.estadoList = estadoList;
 	}
-
+	public boolean isEditando() {
+		return this.estado.getId() != null;
+	}
 	
 }

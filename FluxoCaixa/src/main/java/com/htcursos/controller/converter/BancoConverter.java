@@ -3,11 +3,11 @@ package com.htcursos.controller.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.htcursos.model.entity.Banco;
+
 import com.htcursos.model.service.BancoService;
 
 @Named
@@ -27,17 +27,14 @@ public class BancoConverter implements Converter {
 
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object banco) {
 	
-		   if (banco == null) {
-	            return null; // Or an empty string, can also.
-	        }
+		if (banco == null)
+			return "";
+		Banco b = (Banco) banco;
+		if (b.getId() == null)
+			return null;
 
-	        if (!(banco instanceof Banco)) {
-	            throw new ConverterException("The value is not a valid Banco: " + banco);
-	        }
-
-	       Long id = ((Banco)banco).getId();
-	        return (id != null) ? String.valueOf(id) : null;
-	    }
+		return b.getId().toString();
+	}
 	}
 
 

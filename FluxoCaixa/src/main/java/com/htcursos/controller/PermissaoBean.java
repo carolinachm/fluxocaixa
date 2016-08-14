@@ -70,5 +70,8 @@ public class PermissaoBean {
 	public void setPermissaoList(List<Permissao> permissaoList) {
 		this.permissaoList = permissaoList;
 	}
+	public boolean isEditando() {
+		return this.permissao.getId() != null;
+	}
 
 }

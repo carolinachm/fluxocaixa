@@ -60,7 +60,7 @@ public class PessoaBean {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Salvo com Sucesso!", null));
 		} catch (ServiceException e) {
-			// Código da mensagem de erro para Tela
+			// Cï¿½digo da mensagem de erro para Tela
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -71,7 +71,7 @@ public class PessoaBean {
 
 	public void excluir() {
 		pessoaService.excluir(pessoa);
-		// Nova instância para limpar formulário
+		// Nova instï¿½ncia para limpar formulï¿½rio
 		limpar();
 		// Atualiza lista
 		pessoaList = pessoaService.buscarTodos();
@@ -103,6 +103,9 @@ public class PessoaBean {
 
 	public void setEstadoList(List<Estado> estadoList) {
 		this.estadoList = estadoList;
+	}
+	public boolean isEditando() {
+		return this.pessoa.getId() != null;
 	}
 
 }

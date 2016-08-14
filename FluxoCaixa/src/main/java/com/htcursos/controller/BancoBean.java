@@ -4,12 +4,15 @@ package com.htcursos.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import com.htcursos.model.entity.Banco;
 import com.htcursos.model.entity.Banco;
 import com.htcursos.model.entity.TipoConta;
 import com.htcursos.model.service.BancoService;
@@ -39,17 +42,34 @@ public class BancoBean {
 		banco = new Banco();
 	}
 	
-	public void salvar() throws ServiceException{
-		bancoService.salvar(banco);
-		limpar();
-		bancoList = bancoService.buscarTodos();
-		FacesUtil.addInfoMessage("Banco salvo com sucesso");
+	public void salvar() {
+		try {
+			bancoService.salvar(banco);
+			// Limpar os dados
+			banco = new Banco();
+			// Atualiza lista
+			bancoList = bancoService.buscarTodos();
+			// Envia Mensagem para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Salvo com Sucesso!", null));
+		} catch (ServiceException e) {
+			// C�digo da mensagem de erro para Tela
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Erro ao Salvar: " + e.getMessage(), null));
+			e.printStackTrace();
+		}
 	}
-	public void excluir() throws ServiceException{
+
+	public void excluir() {
 		bancoService.excluir(banco);
-		limpar();
+		// Nova inst�ncia para limpar formul�rio
+		banco = new Banco();
+		// Atualiza lista
 		bancoList = bancoService.buscarTodos();
-		FacesUtil.addInfoMessage("Usuário excluido com sucesso");
 	}
 	
 	public void buscarTodos(){
@@ -72,6 +92,8 @@ public class BancoBean {
 		this.bancoList = bancoList;
 	}
 	
-
+	public boolean isEditando() {
+		return this.banco.getId() != null;
+	}
 	
 }

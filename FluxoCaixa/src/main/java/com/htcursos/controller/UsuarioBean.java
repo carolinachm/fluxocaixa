@@ -101,5 +101,8 @@ public class UsuarioBean {
 	public void setPermissaoList(List<Permissao> permissaoList) {
 		this.permissaoList = permissaoList;
 	}
+	public boolean isEditando() {
+		return this.usuario.getId() != null;
+	}
 
 }
