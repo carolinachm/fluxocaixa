@@ -1,0 +1,93 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de Cliente</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de cliente</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/cliente/CadastroCliente" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+			<p:dataTable id="clienteTable" value="#{clienteBean.clienteList}"
+				var="cliente" style="margin-top: 20px"
+				emptyMessage="Nenhum cliente encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">Cliente</f:facet>
+				<p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}"
+					sortBy="#{cliente.pessoa.nome}">
+					<h:outputText value="#{cliente.pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF" filterBy="#{cliente.pessoa.cpf}"
+					sortBy="#{cliente.pessoa.cpf}">
+					<h:outputText value="#{cliente.pessoa.cpf}" />
+				</p:column>
+
+				<p:column headerText="Data de Cadastro"
+					sortBy="#{cliente.dataCadastro}">
+					<h:outputText value="#{cliente.dataCadastro}">
+						<f:convertDateTime locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Liberado" sortBy="#{cliente.liberado}">
+					<p:selectBooleanCheckbox value="#{cliente.liberado}"
+						disabled="true" />
+				</p:column>
+
+				<p:column headerText="Ação">
+
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form"
+						action="#{clienteBean.setCliente(cliente)}">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteBean.cliente}" />
+					</p:commandButton>
+
+
+					<!--  <p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form"
+						action="#{clienteBean.setCliente(cliente)}">
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteBean.cliente}" />
+					</p:commandButton>-->
+
+					<p:button icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form"
+						outcome="/cliente/CadastroCliente">
+						<f:param name="cliente" value="#{cliente.id}" />
+					</p:button>
+
+
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{clienteBean.excluir}"
+					onclick="confirmacao.hide();" update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

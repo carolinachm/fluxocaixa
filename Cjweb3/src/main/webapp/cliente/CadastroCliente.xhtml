@@ -1,0 +1,56 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">#{clienteBean.editando ? 'Edição Cliente' : ' Novo Cliente'}</ui:define>
+    
+    <ui:define name="corpo">
+    <f:metadata>
+    <f:viewParam name="cliente" value="#{clienteBean.cliente}"
+			converter="#{clienteConverter}"/>
+    </f:metadata>
+    	<h:form>
+	    	<h1>#{clienteBean.editando ? 'Edição Cliente' : ' Novo Cliente'}</h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true" />
+	    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Novo"  />
+	    			<p:commandButton value="Salvar" id="botaoSalvar"
+	    	    		action="#{clienteBean.salvar}" />
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Pesquisa" outcome="/cliente/PesquisaCliente.xhtml"/>
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    <h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="pessoa" value="Pessoa:" />
+				<p:selectOneMenu id="pessoa" filter="true"
+					value="#{clienteBean.cliente.pessoa}" required="true"
+					requiredMessage="O campo 'Pessoa' é obrigatório"
+					converter="#{pessoaConverter}">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma pessoa" />
+					<f:selectItems value="#{clienteBean.pessoaList}" var="pessoa"
+						itemValue="#{pessoa}" itemLabel="#{pessoa.nome} - #{pessoa.cpf}" />
+				</p:selectOneMenu>
+
+					<p:outputLabel for="dataCadastro" value="Data de Cadastro:" />
+					<p:calendar id="dataCadastro"
+						value="#{clienteBean.cliente.dataCadastro}" required="true"
+						requiredMessage="O campo 'Data de Cadastro' é obrigatório"
+						size="12" locale="pt_BR" />
+
+					<p:outputLabel for="liberado" value="Liberado:" />
+					<p:selectBooleanCheckbox id="liberado"
+						value="#{clienteBean.cliente.liberado}" required="true"
+						requiredMessage="O campo 'Liberado' é obrigatório" />
+				</h:panelGrid>
+    	</h:form>
+    </ui:define>
+</ui:composition>

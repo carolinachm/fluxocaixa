@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="4" style="width: 100%; margin-top: 20px"
+		columnClasses="rotulo, campo, rotulo, campo">
+
+		<p:outputLabel value="Tipo Lancamento" for="tipo" />
+		<p:selectOneMenu id="tipo">
+			<f:selectItem noSelectionOption="true"
+				itemLabel="Selecione uma lançamento" />
+			<f:selectItem itemLabel="Receita" />
+			<f:selectItem itemLabel="Despesa" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="banco" value="Banco:" />
+		<p:selectOneMenu id="banco" filter="true"
+			value="#{lancamentoBean.lancamento.banco}" required="true"
+			requiredMessage="O campo 'banco' é obrigatório"
+			converter="#{bancoConverter}">
+			<f:selectItem noSelectionOption="true"
+				itemLabel="Selecione uma banco" />
+			<f:selectItems value="#{lancamentoBean.bancoList}" var="banco"
+				itemValue="#{banco}" itemLabel="#{banco.nome}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="cliente" value="Cliente:" />
+		<p:selectOneMenu id="cliente" filter="true"
+			value="#{LancamentoBean.lancamento.cliente}" required="true"
+			requiredMessage="O campo 'Cliente' é obrigatório"
+			converter="#{clienteConverter}">
+			<f:selectItem noSelectionOption="true"
+				itemLabel="Selecione uma cliente" />
+			<f:selectItems value="#{lancamentoBean.clienteList}" var="cliente"
+				itemValue="#{cliente}"
+				itemLabel="#{cliente.pessoa.nome} - #{cliente.pessoa.cpf}" />
+		</p:selectOneMenu>
+
+
+		<p:outputLabel for="empresa" value="Empresa:" />
+		<p:selectOneMenu id="empresa" filter="true"
+			value="#{lancamentoBean.lancamento.empresa}" required="true"
+			requiredMessage="O campo 'Empresa' é obrigatório"
+			converter="#{empresaConverter}">
+			<f:selectItem noSelectionOption="true"
+				itemLabel="Selecione uma empresa" />
+			<f:selectItems value="#{lancamentoBean.empresaList}"
+				var="empresa" itemValue="#{empresa}"
+				itemLabel="#{empresa.razaoSocial} - #{empresa.cnpj}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="fornecedor" value="Fornecedor:" />
+		<p:selectOneMenu id="fornecedor" filter="true"
+			value="#{lancamentoBean.lancamento.fornecedor}" required="true"
+			requiredMessage="O campo 'Fornecedor' é obrigatório"
+			converter="#{fornecedorConverter}">
+			<f:selectItem noSelectionOption="true"
+				itemLabel="Selecione uma fornecedor" />
+			<f:selectItems value="#{lancamentoBean.fornecedorList}"
+				var="fornecedor" itemValue="#{fornecedor}"
+				itemLabel="#{fornecedor.razaoSocial} - #{fornecedor.cnpj}" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="dataEmissao" value="Data de Emissão:" />
+		<p:calendar id="dataEmissao"
+			value="#{lancamentoBean.lancamento.dataEmissao}" required="true"
+			requiredMessage="O campo 'Data de Cadastro' é obrigatório" size="12"
+			locale="pt_BR" />
+
+		<p:outputLabel for="dataVencimento" value="Data de Vencimento:" />
+		<p:calendar id="dataVencimento"
+			value="#{lancamentoBean.lancamento.dataVencimento}" required="true"
+			requiredMessage="O campo 'Data de Vencimento' é obrigatório"
+			size="12" locale="pt_BR" />
+
+		<p:outputLabel for="dataFluxo" value="Data do Fluxo:" />
+		<p:calendar id="dataFluxo"
+			value="#{lancamentoBean.lancamento.dataFluxo}" required="true"
+			requiredMessage="O campo 'Data de Fluxo' é obrigatório" size="12"
+			locale="pt_BR" />
+
+		<p:outputLabel value="Forma de pagamento" for="formaPagamento" />
+		<p:selectOneMenu id="formaPagamento">
+			<f:selectItem itemLabel="Selecione" />
+			<f:selectItem itemLabel="Cartão de crédito" />
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Valor" for="valor" />
+		<p:inputText id="valor" size="10" maxlength="10" />
+
+		
+	</p:panelGrid>
+
+</ui:composition>

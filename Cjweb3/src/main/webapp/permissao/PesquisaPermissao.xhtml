@@ -1,0 +1,76 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de permissao</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de permissão</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/permissao/CadastroPermissao" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+			<p:dataTable id="permissaoTable"
+				value="#{permissaoBean.permissaoList}" var="permissao"
+				style="margin-top: 20px" emptyMessage="Nenhum produto encontrado."
+				rows="20" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+				
+				<f:facet name="header">Permissão</f:facet>
+				<p:column headerText="Código">
+					<h:outputText value="#{permissao.id}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{permissao.descricao}" />
+				</p:column>
+
+
+				<p:column headerText="Ação">
+					<!--  <p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{permissao}"
+							target="#{permissaoBean.permissao}" />
+					</p:commandButton>-->
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{permissao}"
+							target="#{permissaoBean.permissao}" />
+					</p:commandButton>
+					
+					<p:button icon="ui-icon-pencil" alt="Editar" title="Editar" value="#{permissaoBean.setPermissao(permissao)}"
+						immediate="true" process="@this" update="@form" outcome="/permissao/CadastroPermissao">
+						<f:param name="permissao" value="#{permissao.id}"/>
+					
+					</p:button>
+
+
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{permissaoBean.excluir}"
+					onclick="confirmacao.hide();" update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

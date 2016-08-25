@@ -1,0 +1,82 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa de pessoa</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form>
+	    	<h1>Pesquisa de pessoa</h1>
+	    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Pesquisar" />
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Novo" outcome="/pessoa/CadastroPessoa" />
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	
+	    	
+	    	<p:dataTable id="pessoaTable" value="#{pessoaBean.pessoaList}" var="pessoa"
+	    		style="margin-top: 20px" emptyMessage="Nenhum produto encontrado." rows="20"
+	    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	    		<f:facet name="header">Pessoa</f:facet>
+	    		<p:column headerText="Codigo">
+					<h:outputText value="#{pessoa.id}" />
+				</p:column>
+	    		<p:column headerText="Nome">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="RG">
+					<h:outputText value="#{pessoa.rg}" />
+				</p:column>
+
+				<p:column headerText="CPF">
+					<h:outputText value="#{pessoa.cpf}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<h:outputText value="#{pessoa.email}" />
+				</p:column>
+
+
+				<p:column headerText="Ação" width="100">
+					<p:commandButton icon="ui-icon-trash" alt="Excluir" title="Excluir"
+						oncomplete="PF('confirmacao').show()" immediate="true"
+						action="#{pessoaBean.setPessoa(pessoa)}">
+						<f:setPropertyActionListener value="#{pessoa}"
+							target="#{pessoaBean.pessoa}" />
+					</p:commandButton>
+
+
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						process="@this" update="@form"
+						action="#{pessoaBean.setPessoa(pessoa)}">
+						<f:setPropertyActionListener value="#{pessoa}"
+							target="#{pessoaBean.pessoa}" />
+					</p:commandButton>
+				</p:column>
+
+
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{pessoaBean.excluir}"
+					onclick="confirmacao.hide();" update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+    	</h:form>
+    </ui:define>
+</ui:composition>
