@@ -1,0 +1,100 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{categoriaBean.editando ? 'Edição de Categoria' : 'Novo Categoria'}</ui:define>
+
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewParam name="categoria" value="#{categoriaBean.categoria}"
+				converter="#{categoriaConverter}" />
+
+		</f:metadata>
+		<h:form>
+			<h1>#{categoriaBean.editando ? 'Edição de Categoria' : 'Novo
+				Categoria'}</h1>
+
+			<p:tabView id="tabView">
+				<p:tab id="tab1" title="Categoria">
+
+					<p:messages autoUpdate="true" closable="true" />
+
+					<p:toolbar style="margin-top: 20px">
+						<p:toolbarGroup>
+							<p:button value="Novo" outcome="/categoria/CadastroCategoria" />
+							<p:commandButton value="Salvar" id="botaoSalvar"
+								action="#{categoriaBean.salvar}" />
+						</p:toolbarGroup>
+						<p:toolbarGroup align="right">
+							<p:button value="Pesquisa" outcome="/categoria/PesquisaCategoria" />
+						</p:toolbarGroup>
+					</p:toolbar>
+
+					<p:panelGrid columns="2" id="painel"
+						style="width: 100%; margin-top: 20px"
+						columnClasses="rotulo, campo">
+
+						<p:outputLabel for="numero" value="Numero:" size="30"
+							maxlength="50" />
+						<p:inputText id="numero" value="#{categoriaBean.categoria.numero}"
+							required="true" requiredMessage="O campo numero é obrigatório" />
+
+						<p:outputLabel for="descricao" value="Descrição:" size="10"
+							maxlength="50" />
+						<p:inputText id="descricao"
+							value="#{categoriaBean.categoria.descricao}" required="true"
+							requiredMessage="O campo descricao é obrigatório"
+							style="text-transform:touppercase;" />
+
+					</p:panelGrid>
+				</p:tab>
+				
+				<p:tab id="tab2" title="SubCategoria">
+				
+				<p:toolbar style="margin-top: 20px">
+						<p:toolbarGroup>
+							<p:commandButton value="Salvar" 
+								action="#{subSubCategoriaBean.salvar}" />
+						</p:toolbarGroup>
+						
+					</p:toolbar>
+					
+					<p:panelGrid columns="2" id="painel1"
+						style="width: 100%; margin-top: 20px"
+						columnClasses="rotulo, campo">
+
+						<p:outputLabel for="categoria" value="Categoria:" />
+						<p:selectOneMenu id="categoria"
+							value="#{subCategoriaBean.subCategoria.categoria}"
+							converter="#{categoriaConverter}">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um categoria" />
+							<f:selectItems value="#{subCategoriaBean.categoriaList}"
+								var="categoria" itemLabel="#{categoria.descricao}"
+								itemValue="#{categoria}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="numero" value="Numero:" size="30"
+							maxlength="50" />
+						<p:inputText id="numerosub"
+							value="#{subSubCategoriaBean.subSubCategoria.numero}"
+							required="true" requiredMessage="O campo numero é obrigatório" />
+
+						<p:outputLabel for="descricao" value="Descrição:" size="10"
+							maxlength="50" />
+						<p:inputText id="descricaosub"
+							value="#{subSubCategoriaBean.subSubCategoria.descricao}"
+							required="true" requiredMessage="O campo descricao é obrigatório"
+							style="text-transform:touppercase;" />
+
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

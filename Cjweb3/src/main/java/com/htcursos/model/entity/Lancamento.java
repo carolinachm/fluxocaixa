@@ -46,6 +46,9 @@ public class Lancamento {
 	private TipoLancamento tipoLancamento;
 	@Enumerated(EnumType.STRING)
 	private FormaPagamento formaPagamento;
+	private String observacao;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	public Lancamento() {
 		// TODO Auto-generated constructor stub
@@ -55,7 +58,7 @@ public class Lancamento {
 			Date dataEmissao, Date dataVencimento, Date dataFluxo, Banco banco,
 			Conta conta, Cliente cliente, Empresa empresa,
 			Fornecedor fornecedor, TipoLancamento tipoLancamento,
-			FormaPagamento formaPagamento) {
+			FormaPagamento formaPagamento, String observacao, Status status) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -70,6 +73,8 @@ public class Lancamento {
 		this.fornecedor = fornecedor;
 		this.tipoLancamento = tipoLancamento;
 		this.formaPagamento = formaPagamento;
+		this.observacao = observacao;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -176,6 +181,22 @@ public class Lancamento {
 		this.formaPagamento = formaPagamento;
 	}
 
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -197,6 +218,9 @@ public class Lancamento {
 		result = prime * result
 				+ ((fornecedor == null) ? 0 : fornecedor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((observacao == null) ? 0 : observacao.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
 				+ ((tipoLancamento == null) ? 0 : tipoLancamento.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
@@ -264,6 +288,13 @@ public class Lancamento {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (observacao == null) {
+			if (other.observacao != null)
+				return false;
+		} else if (!observacao.equals(other.observacao))
+			return false;
+		if (status != other.status)
+			return false;
 		if (tipoLancamento != other.tipoLancamento)
 			return false;
 		if (valor == null) {
@@ -282,9 +313,11 @@ public class Lancamento {
 				+ banco + ", conta=" + conta + ", cliente=" + cliente
 				+ ", empresa=" + empresa + ", fornecedor=" + fornecedor
 				+ ", tipoLancamento=" + tipoLancamento + ", formaPagamento="
-				+ formaPagamento + "]";
+				+ formaPagamento + ", observacao=" + observacao + ", status="
+				+ status + "]";
 	}
 
+	
 	
 	
 	

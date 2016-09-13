@@ -20,13 +20,7 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<p:panelGrid columns="2" id="painel"
-				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
-
-				<p:outputLabel value="Nome" for="nome" />
-				<p:inputText id="nome" size="60" />
-			</p:panelGrid>
-
+		
 			<p:dataTable id="cidadeTable" value="#{cidadeBean.cidadeList}"
 				var="cidade" style="margin-top: 20px"
 				emptyMessage="Nenhum produto encontrado." rows="20" paginator="true"

@@ -8,12 +8,13 @@
 		columnClasses="rotulo, campo, rotulo, campo">
 
 		<p:outputLabel value="Tipo Lancamento" for="tipo" />
-		<p:selectOneMenu id="tipo">
-			<f:selectItem noSelectionOption="true"
-				itemLabel="Selecione uma lançamento" />
-			<f:selectItem itemLabel="Receita" />
-			<f:selectItem itemLabel="Despesa" />
-		</p:selectOneMenu>
+		<p:selectOneRadio id="tipo"
+						value="#{lancamentoBean.lancamento.tipoLancamento}" required="true"
+						requiredMessage="O campo tipo conta é obrigatório">
+						<f:selectItem itemValue="D" itemLabel="Despesa" />
+						<f:selectItem itemValue="R" itemLabel="Receita" />
+					
+					</p:selectOneRadio>
 
 		<p:outputLabel for="banco" value="Banco:" />
 		<p:selectOneMenu id="banco" filter="true"
@@ -46,8 +47,8 @@
 			converter="#{empresaConverter}">
 			<f:selectItem noSelectionOption="true"
 				itemLabel="Selecione uma empresa" />
-			<f:selectItems value="#{lancamentoBean.empresaList}"
-				var="empresa" itemValue="#{empresa}"
+			<f:selectItems value="#{lancamentoBean.empresaList}" var="empresa"
+				itemValue="#{empresa}"
 				itemLabel="#{empresa.razaoSocial} - #{empresa.cnpj}" />
 		</p:selectOneMenu>
 
@@ -90,7 +91,25 @@
 		<p:outputLabel value="Valor" for="valor" />
 		<p:inputText id="valor" size="10" maxlength="10" />
 
-		
+		<p:outputLabel for="status" value="Status:" />
+		<p:selectOneRadio id="status"
+			value="#{lancamentoBean.lancamento.status}" required="true"
+			requiredMessage="O campo tipo conta é obrigatório">
+			<f:selectItem itemValue="P" itemLabel="Pagar" />
+			<f:selectItem itemValue="A" itemLabel="Aberto" />
+			<f:selectItem itemValue="V" itemLabel="Vencidas" />
+
+		</p:selectOneRadio>
+
+		<p:outputLabel for="observacao" value="Observação:" size="30"
+			maxlength="100" />
+		<p:inputTextarea id="observacao"
+			value="#{lancamentoBean.lancamento.observacao}" required="true"
+			requiredMessage="O campo saldo é obrigatório" />
+
+
+
+
 	</p:panelGrid>
 
 </ui:composition>
