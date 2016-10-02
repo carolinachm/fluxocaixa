@@ -71,7 +71,7 @@ public class Lancamento {
 			Date dataEmissao, Date dataVencimento, Categoria categoria,
 			Usuario usuario, Banco banco, Conta conta, Cliente cliente,
 			Empresa empresa, Fornecedor fornecedor,
-			Situacao tipoLancamento, FormaPagamento formaPagamento) {
+			 FormaPagamento formaPagamento) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -85,7 +85,7 @@ public class Lancamento {
 		this.cliente = cliente;
 		this.empresa = empresa;
 		this.fornecedor = fornecedor;
-		this.tipoLancamento = tipoLancamento;
+		
 		this.formaPagamento = formaPagamento;
 	}
 
@@ -185,13 +185,7 @@ public class Lancamento {
 		this.fornecedor = fornecedor;
 	}
 
-	public Situacao getTipoLancamento() {
-		return tipoLancamento;
-	}
 
-	public void setTipoLancamento(Situacao tipoLancamento) {
-		this.tipoLancamento = tipoLancamento;
-	}
 
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
@@ -222,8 +216,7 @@ public class Lancamento {
 		result = prime * result
 				+ ((fornecedor == null) ? 0 : fornecedor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((tipoLancamento == null) ? 0 : tipoLancamento.hashCode());
+		
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
@@ -290,8 +283,7 @@ public class Lancamento {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (tipoLancamento != other.tipoLancamento)
-			return false;
+		
 		if (usuario == null) {
 			if (other.usuario != null)
 				return false;
@@ -312,8 +304,7 @@ public class Lancamento {
 				+ dataVencimento + ", categoria=" + categoria + ", usuario="
 				+ usuario + ", banco=" + banco + ", conta=" + conta
 				+ ", cliente=" + cliente + ", empresa=" + empresa
-				+ ", fornecedor=" + fornecedor + ", tipoLancamento="
-				+ tipoLancamento + ", formaPagamento=" + formaPagamento + "]";
+				+ ", fornecedor=" + fornecedor + ", formaPagamento=" + formaPagamento + "]";
 	}
 
 	

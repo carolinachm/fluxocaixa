@@ -16,7 +16,6 @@ import com.htcursos.model.entity.Empresa;
 import com.htcursos.model.entity.FormaPagamento;
 import com.htcursos.model.entity.Fornecedor;
 import com.htcursos.model.entity.Lancamento;
-import com.htcursos.model.entity.Situacao;
 import com.htcursos.model.service.BancoService;
 import com.htcursos.model.service.ClienteService;
 import com.htcursos.model.service.EmpresaService;
@@ -36,8 +35,6 @@ public class LancamentoBean {
 	private List<Lancamento> lancamentoList;
 
 	private FormaPagamento[] formaPagamento;
-
-	private Situacao[] tipoLancamento;
 	private List<Cliente> clienteList;
 	private List<Fornecedor> fornecedorList;
 	private List<Empresa> empresaList;
@@ -124,15 +121,7 @@ public class LancamentoBean {
 	public void setFormaPagamento(FormaPagamento[] formaPagamento) {
 		this.formaPagamento = formaPagamento;
 	}
-
-	public Situacao[] getTipoLancamento() {
-		return tipoLancamento;
-	}
-
-	public void setTipoLancamento(Situacao[] tipoLancamento) {
-		this.tipoLancamento = tipoLancamento;
-	}
-
+	
 	public List<Cliente> getClienteList() {
 		return clienteList;
 	}
