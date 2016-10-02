@@ -1,0 +1,54 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{contaBean.editando ? 'Edição Conta' : 'Nova Conta'}</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewParam name="conta" value="{contaBean.conta}"
+				converter="#{contaConverter}" />
+		</f:metadata>
+		<h:form>
+			<h1>#{contaBean.editando ? 'Edição Conta' : 'Nova Conta'}</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="/conta/CadastroConta" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						action="#{contaBean.salvar}" update="@form"/>
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/conta/PesquisaConta" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel for="descricao" value="Descrição:" size="30"
+					maxlength="50" />
+				<p:inputText id="descricao" value="#{contaBean.conta.descricao}"
+					required="true" requiredMessage="O campo conta é obrigatório" />
+
+				<p:outputLabel for="data" value="Data de Cadastro:" />
+				<p:calendar id="data"
+					value="#{contaBean.conta.dataCadastro}" required="true"
+					requiredMessage="O campo 'Data de Cadastro' é obrigatório"
+					size="12" locale="pt_BR" />
+
+				<p:outputLabel for="saldo" value="Saldo Inicial:" size="30"
+					maxlength="50" />
+				<p:inputText id="saldo" value="#{contaBean.conta.saldoInicial}"
+					required="true" requiredMessage="O campo saldo é obrigatório">
+					<f:convertNumber maxFractionDigits="2" />
+				</p:inputText>
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

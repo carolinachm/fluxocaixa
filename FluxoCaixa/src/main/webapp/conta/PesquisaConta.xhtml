@@ -1,0 +1,91 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de Conta</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de conta</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/conta/CadastroConta" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+			<p:dataTable id="contaTable" value="#{contaBean.contaList}"
+				var="conta" style="margin-top: 20px"
+				emptyMessage="Nenhuma conta encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">Conta</f:facet>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{conta.id}" />
+				</p:column>
+				<p:column headerText="Descricão">
+					<h:outputText value="#{conta.descricao}" />
+				</p:column>
+
+				<p:column headerText="Data Cadastro">
+					<h:outputText value="#{conta.dataCadastro}">
+					<f:convertDateTime dateStyle="medium"/>
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Saldo Inicial" sortBy="#{conta.saldoInicial}"
+					filterBy="#{conta.saldoInicial}">
+					<h:outputText value="#{conta.saldoInicial}">
+					<f:convertNumber maxFractionDigits="2"/>
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Favorita">
+					<p:commandLink action="#{contaBean.tornarFavorita}">
+						<f:ajax execute="@this" render=":contaTabela"/>
+						<h:graphicImage library="images" name="favorito.png" width="50" height="50" styleClass="text-align:center"/>
+						<f:setPropertyActionListener value="#{conta}"
+							target="#{contaBean.conta}" />
+
+					</p:commandLink>
+					
+				</p:column>
+
+				<p:column headerText="Ação">
+				
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{conta}"
+							target="#{contaBean.conta}" />
+					</p:commandButton>
+
+					<p:button icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form"
+						outcome="/conta/CadastroConta">
+						<f:param name="conta" value="#{conta.id}" />
+					</p:button>
+
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{contaBean.excluir}" onclick="confirmacao.hide();"
+					update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,76 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de Categoria</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de Categoria</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/categoria/CadastroCategoria" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable id="categoriaTable" value="#{categoriaBean.categoriaList}"
+				var="categoria" style="margin-top: 20px"
+				emptyMessage="Nenhum produto encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">Categoria</f:facet>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{categoria.id}" />
+				</p:column>
+				<p:column headerText="Numero" >
+					<h:outputText value="#{categoria.numCategoria}" />
+				</p:column>
+				<p:column headerText="Descrição" >
+					<h:outputText value="#{categoria.descricao}" />
+				</p:column>
+				
+
+
+				<p:column headerText="Ação">
+					<!-- <p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{categoria}"
+							target="#{categoriaBean.categoria}" />
+					</p:commandButton>-->
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{categoria}"
+							target="#{categoriaBean.categoria}" />
+					</p:commandButton>
+
+					<p:button outcome="/categoria/CadastroCategoria" icon="ui-icon-pencil"
+						title="Editar"
+						immediate="true" process="@this" update="@form">
+						<f:param name="categoria" value="#{categoria.id}" />
+					</p:button>
+
+
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{categoriaBean.excluir}" onclick="confirmacao.hide();"
+					update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

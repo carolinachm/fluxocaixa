@@ -1,0 +1,78 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de estado</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de estado</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/estado/CadastroEstado" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+
+			<p:dataTable id="estadoTable" value="#{estadoBean.estadoList}"
+				var="estado" style="margin-top: 20px"
+				emptyMessage="Nenhum produto encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">Estado</f:facet>
+				<p:column headerText="Código">
+					<h:outputText value="#{estado.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{estado.nome}" />
+				</p:column>
+				<p:column headerText="UF">
+					<h:outputText value="#{estado.uf}" />
+				</p:column>
+
+				<p:column headerText="Ação">
+
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form"
+						action="#{estadoBean.setEstado(estado)}">
+						<f:setPropertyActionListener value="#{estado}"
+							target="#{estadoBean.estado}" />
+					</p:commandButton>
+
+					<p:button outcome="/estado/CadastroEstado" icon="ui-icon-pencil"
+						title="Editar" process="@this" update="@form" action="#{estadoBean.setEstado(estado)}">
+						<f:param name="estado" value="#{estado.id}" />
+					</p:button>
+
+					<!--  <p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form" action="#{estadoBean.setEstado(estado)}">
+						<f:setPropertyActionListener value="#{estado}"
+							target="#{estadoBean.estado}" />
+					</p:commandButton>-->
+
+
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{estadoBean.excluir}"
+					onclick="confirmacao.hide();" update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

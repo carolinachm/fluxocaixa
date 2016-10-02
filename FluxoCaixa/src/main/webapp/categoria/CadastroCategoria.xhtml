@@ -1,0 +1,50 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{categoriaBean.editando ? 'Edição de Categoria' : 'Novo Categoria'}</ui:define>
+
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewParam name="categoria" value="#{categoriaBean.categoria}"  converter="#{categoriaConverter}"/>
+
+		</f:metadata>
+		<h:form>
+			 	<h1>#{categoriaBean.editando ? 'Edição de categoria' : 'Novo categoria'}</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:button value="Novo" outcome="/categoria/CadastroCategoria" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						action="#{categoriaBean.salvar}" update="@all"/>
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/categoria/PesquisaCategoria" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel for="numero" value="Numero:" size="30" maxlength="50" />
+				<p:inputText id="numero" value="#{categoriaBean.categoria.numCategoria}"
+					required="true" requiredMessage="O campo nome é obrigatório"
+					style="text-transform:touppercase;" />
+
+				<p:outputLabel for="descricao" value="Descricao:" size="5" maxlength="2" />
+				<p:inputText id="descricao" value="#{categoriaBean.categoria.descricao}"
+					required="true" requiredMessage="O campo descricao é obrigatório"
+					style="text-transform:uppercase;" />
+
+				
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
