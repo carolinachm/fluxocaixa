@@ -61,7 +61,7 @@
 		<property name="scopes">
 			<map>
 				<entry key="view">
-					<bean class="com.htcursos.controller.util.ViewScope"></bean>
+					<bean class="br.com.sysfinanceiro.controller.util.ViewScope"></bean>
 				</entry>
 			</map>
 		</property>

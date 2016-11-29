@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.htcursos.model.dao.DAOException;
-import com.htcursos.model.dao.UsuarioDAO;
-import com.htcursos.model.entity.Usuario;
+import br.com.sysfinanceiro.model.dao.DAOException;
+import br.com.sysfinanceiro.model.dao.UsuarioDAO;
+import br.com.sysfinanceiro.model.entity.Usuario;
 
 
 public class TestSpring {

@@ -12,9 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.htcursos.model.dao.DAOException;
-import com.htcursos.model.dao.PermissaoDAO;
-import com.htcursos.model.entity.Permissao;
+import br.com.sysfinanceiro.model.dao.DAOException;
+import br.com.sysfinanceiro.model.dao.PermissaoDAO;
+import br.com.sysfinanceiro.model.entity.Permissao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/applicationContext.xml" })

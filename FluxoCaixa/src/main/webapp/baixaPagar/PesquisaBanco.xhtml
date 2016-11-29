@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de Banco</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de Banco</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/banco/CadastroBanco" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable id="bancoTable" value="#{bancoBean.bancoList}"
+				var="banco" style="margin-top: 20px"
+				emptyMessage="Nenhum produto encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<f:facet name="header">Banco</f:facet>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{banco.id}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{banco.nome}"
+					filterBy="#{banco.nome}">
+					<h:outputText value="#{banco.nome}" />
+				</p:column>
+				<p:column headerText="Sigla" sortBy="#{banco.sigla}"
+					filterBy="#{banco.sigla}">
+					<h:outputText value="#{banco.sigla}" />
+				</p:column>
+				<p:column headerText="Numero" sortBy="#{banco.numero}"
+					filterBy="#{banco.numero}">
+					<h:outputText value="#{banco.numero}" />
+				</p:column>
+
+
+				<p:column headerText="Ação">
+					<!-- <p:commandButton icon="ui-icon-pencil" alt="Editar" title="Editar"
+						immediate="true" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{banco}"
+							target="#{bancoBean.banco}" />
+					</p:commandButton>-->
+					<p:commandButton icon="ui-icon-trash" alt="Excluir"
+						oncomplete="PF('confirmacao').show();" immediate="true"
+						title="Excluir" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{banco}"
+							target="#{bancoBean.banco}" />
+					</p:commandButton>
+
+					<p:button outcome="/banco/CadastroBanco" icon="ui-icon-pencil"
+						title="Editar"
+						immediate="true" process="@this" update="@form">
+						<f:param name="banco" value="#{banco.id}" />
+					</p:button>
+
+
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog widgetVar="confirmacao"
+				message="Tem certeza que deseja excluir?" header="Aviso"
+				severity="alert" closable="true">
+
+				<p:commandButton title="Sim" alt="Sim" value="Sim"
+					actionListener="#{bancoBean.excluir}" onclick="confirmacao.hide();"
+					update="@form" process="@this" />
+
+				<p:commandButton title="Não" alt="Não" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
